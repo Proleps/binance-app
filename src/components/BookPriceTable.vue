@@ -6,17 +6,19 @@
       <div class="col col_hidden-on-mobile">Total</div>
     </div>
     <div class="table__body body">
-      <div class="table_loading" v-if="!market.length">
-        Пожалуйста подождите, данные заружаются...
-      </div>
-      <div
-        v-for="(item, key) of market"
-        :key="item[0] + key"
-        class="body_row row"
-      >
-        <div class="col">{{item[1]}}</div>
-        <div class="col">{{item[0]}}</div>
-        <div class="col col_hidden-on-mobile">{{item[1] * item[0]}}</div>
+      <div class="wrap">
+        <div class="table_loading" v-if="!market.length">
+          Пожалуйста подождите, данные заружаются...
+        </div>
+        <div
+          v-for="(item, key) of market"
+          :key="item[0] + key"
+          class="body_row row"
+        >
+          <div class="col">{{item[1]}}</div>
+          <div class="col">{{item[0]}}</div>
+          <div class="col col_hidden-on-mobile">{{item[1] * item[0]}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -52,13 +54,19 @@ export default {
       padding-left: 1rem
       text-align: start
     .body
+      position: relative
       height: calc( 100% - 2rem )
       width: 100%
       overflow: hidden
       &_row:nth-child(even)
         background-color: rgba( 0, 0, 0, 0.4)
       &:hover
-        overflow-y: scroll
+        overflow-y: auto
+      .wrap
+        position: absolute
+        width: calc(50vw - 6rem)
+        left: 0
+        top: 0
     &_loading
       height: 2rem
       display: flex
@@ -68,7 +76,4 @@ export default {
     .col
       &_hidden-on-mobile
         display: none
-  @media (min-width: 1024px)
-    .body:hover
-        width: calc( 100% + 17px )
 </style>

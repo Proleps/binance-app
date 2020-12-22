@@ -7,6 +7,7 @@
 
 <script>
 import BookPriceTable from '../components/BookPriceTable'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
@@ -14,12 +15,10 @@ export default {
     BookPriceTable
   },
   computed: {
-    activeSymbol() {
-      return this.$store.getters.getActiveSymbol
-    },
-    market() {
-      return this.$store.state.market
-    }
+    ...mapState({
+      activeSymbol: state => state.activeSymbol,
+      market: state => state.market
+    })
   },
   created() {
     this.$store.dispatch('updateMarket', this.activeSymbol)

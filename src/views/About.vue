@@ -14,6 +14,7 @@
 <script>
 import DropdownComponent from '../common/DropdownComponent'
 import BookPriceTable from '../components/BookPriceTable'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -30,12 +31,10 @@ export default {
     }
   },
   computed: {
-    diffs() {
-      return this.$store.state.diffs
-    },
-    activeSymbol() {
-      return this.$store.getters.getActiveSymbol
-    }
+    ...mapState({
+      activeSymbol: state => state.activeSymbol,
+      diffs: state => state.diffs
+    })
   },
   created() {
     this.$store.dispatch('updateMarket', this.activeSymbol)
