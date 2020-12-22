@@ -1,18 +1,39 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <BookPriceTable :market="market.bids" />
+    <BookPriceTable :market="market.asks" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import BookPriceTable from '../components/BookPriceTable'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    BookPriceTable
+  },
+  computed: {
+    activeSymbol() {
+      return this.$store.getters.getActiveSymbol
+    },
+    market() {
+      return this.$store.state.market
+    }
+  },
+  created() {
+    this.$store.dispatch('updateMarket', this.activeSymbol)
+    this.$store.dispatch('updateMarketWithSocket', this.activeSymbol)
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .home
+    height: 100%
+    padding: 2rem
+    box-sizing: border-box
+    display: flex
+    justify-content: space-around
+    align-items: center
+</style>
