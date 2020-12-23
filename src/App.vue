@@ -39,6 +39,11 @@ body {
     font-size: 14px;
   }
 }
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
 @media (max-width: 481px) {
   html {
     font-size: 12px;
@@ -50,18 +55,5 @@ body {
 }
 .routes-container {
   height: calc( 100vh - 5rem );
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

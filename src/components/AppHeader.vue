@@ -4,9 +4,9 @@
       <div class="logo__icon" > B </div>
       <div class="logo__title">Binance-App</div>
     </div>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="header__nav">
+      <router-link to="/">Order book</router-link>
+      <router-link to="/curdif">Currency And Diffs</router-link>
     </div>
   </header>
 </template>
@@ -19,7 +19,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
   .header
     height: 100%
@@ -44,6 +43,24 @@ export default {
         background-color: #42b983
         transform: skewX(-15deg)
       &__title
-        margin: 1rem
-        font-size: 2rem
+        margin: 0 1rem
+        font-size: 1.5rem
+    &__nav
+      height: 100%
+      display: flex
+      flex-direction: row
+      justify-content: center
+      align-items: center
+      a
+        margin: 0 0.5rem
+        font-weight: bold
+        color: #4c5e60
+        &.router-link-exact-active
+          color: #42b983
+  @media (max-width: 481px)
+    .header
+      &__nav
+        flex-direction: column
+        justify-content: center
+        align-items: center
 </style>

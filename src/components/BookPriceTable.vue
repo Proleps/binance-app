@@ -1,24 +1,26 @@
 <template>
   <div class="table">
-    {{title}}
-    <div class="table_title-row row">
+    <div class="table__title row">
+      {{title}}
+    </div>
+    <div class="table__headers row">
       <div class="col">Amount</div>
       <div class="col">Price</div>
-      <div class="col col_hidden-on-mobile">Total</div>
+      <div class="col hidden-on-mobile">Total</div>
     </div>
     <div class="table__body body">
       <div class="wrap">
-        <div class="table_loading" v-if="!market.length">
-          Пожалуйста подождите, данные заружаются...
+        <div class="table_loading" v-if="!market.size">
+          Пожалуйста подождите, данные загружаются...
         </div>
         <div
-          v-for="(item, key) of market"
-          :key="item[0] + key"
-          class="body_row row"
+          v-for="[price, amount] of market"
+          :key="price"
+          class="body__row row"
         >
-          <div class="col">{{item[1]}}</div>
-          <div class="col">{{item[0]}}</div>
-          <div class="col col_hidden-on-mobile">{{item[1] * item[0]}}</div>
+          <div class="col">{{amount.substring(0, 8)}}</div>
+          <div class="col">{{price.substring(0, 8)}}</div>
+          <div class="col hidden-on-mobile">{{`${amount * price}`.substring(0, 12)}}</div>
         </div>
       </div>
     </div>
@@ -30,16 +32,13 @@ export default {
   name: 'HomeTable',
   props: {
     market: {
-      type: Array,
+      type: Map,
       required: true,
     },
     title: {
       type: String,
       required: true,
     },
-  },
-  updated() {
-    console.log('updated');
   },
 };
 </script>
@@ -48,13 +47,16 @@ export default {
   .table
     position: relative
     height: 100%
-    width: 50%
-    margin: 0 2rem
+    width: 45%
+    &__title
+      font-size: 1.5rem
+      border-bottom: 1px solid #42b983 !important
     .row
       height: 2rem
       display: flex
       justify-content: space-around
       align-items: center
+      box-sizing: border-box
       border-bottom: 1px solid rgba(255, 255, 255, 0.2)
     .col
       width: 33%
@@ -62,16 +64,16 @@ export default {
       text-align: start
     .body
       position: relative
-      height: calc( 100% - 2rem )
+      height: calc( 100% - 4rem )
       width: 100%
       overflow: hidden
-      &_row:nth-child(even)
+      &__row:nth-child(even)
         background-color: rgba( 0, 0, 0, 0.4)
       &:hover
         overflow-y: auto
       .wrap
         position: absolute
-        width: calc(50vw - 6rem)
+        width: 45vw
         left: 0
         top: 0
     &_loading
@@ -80,7 +82,6 @@ export default {
       justify-content: center
       align-items: center
   @media (max-width: 768px)
-    .col
-      &_hidden-on-mobile
-        display: none
+    .hidden-on-mobile
+      display: none
 </style>

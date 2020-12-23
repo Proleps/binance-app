@@ -1,11 +1,14 @@
 export default {
   market: {
-    bids: [],
-    asks: [],
+    bids: new Map(),
+    asks: new Map(),
   },
   diffs: {
-    bids: [],
-    asks: [],
+    bids: new Map(),
+    asks: new Map(),
   },
-  activeSymbol: 'BTCUSDT',
+  activeSymbol: {
+    firstCurrency: 'BTC',
+    secondCurrency: 'USDT',
+  },
 };

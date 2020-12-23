@@ -1,18 +1,26 @@
 import api from '../api/binanceApi';
+import {
+  SET_MARKET,
+  SET_DIFFS,
+  SET_ACTIVE_SYMBOL,
+  UPDATE_MARKET_WITH_REST,
+  UPDATE_MARKET_WITH_SOCKET,
+  UPDATE_ACTIVE_SYMBOL,
+} from './actionTypes';
 
 export default {
-  async updateMarket({ commit }, activeSymbol = 'BTCUSDT') {
+  async [UPDATE_MARKET_WITH_REST]({ commit }, activeSymbol) {
     const response = await api.fetchUpdateMarket(activeSymbol);
-    commit('setMarket', response);
+    commit(SET_MARKET, response);
   },
 
-  async updateMarketWithSocket({ commit }, activeSymbol = 'BTCUSDT') {
-    api.startWebsocketDiffsCatching(activeSymbol, commit, 'setDiffs');
+  [UPDATE_MARKET_WITH_SOCKET]({ commit }, activeSymbol) {
+    api.startWebsocketDiffsCatching(activeSymbol, commit, SET_DIFFS);
   },
 
-  updateActiveSymbol({ commit, dispatch }, newActiveSymbol) {
-    commit('setActiveSymbol', newActiveSymbol);
-    dispatch('updateMarket', this.state.activeSymbol);
-    dispatch('updateMarketWithSocket', this.state.activeSymbol);
+  [UPDATE_ACTIVE_SYMBOL]({ commit, dispatch }, [newActiveSymbol, newActiveStringSymbol]) {
+    commit(SET_ACTIVE_SYMBOL, newActiveSymbol);
+    dispatch(UPDATE_MARKET_WITH_REST, newActiveStringSymbol);
+    dispatch(UPDATE_MARKET_WITH_SOCKET, newActiveStringSymbol);
   },
 };
