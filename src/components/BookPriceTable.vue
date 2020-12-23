@@ -1,5 +1,6 @@
 <template>
   <div class="table">
+    {{title}}
     <div class="table_title-row row">
       <div class="col">Amount</div>
       <div class="col">Price</div>
@@ -31,7 +32,14 @@ export default {
     market: {
       type: Array,
       required: true
+    },
+    title: {
+      type: String,
+      required: true
     }
+  },
+  updated() {
+    console.log('updated');
   }
 }
 </script>

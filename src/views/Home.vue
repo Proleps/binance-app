@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <BookPriceTable :market="market.bids" />
-    <BookPriceTable :market="market.asks" />
+    currently currencies couple {{activeSymbol}}
+    <div class="home_content">
+      <BookPriceTable :market="market.bids" title="bids" />
+      <BookPriceTable :market="market.asks" title="asks" />
+    </div>
   </div>
 </template>
 
@@ -29,10 +32,12 @@ export default {
 
 <style lang="sass" scoped>
   .home
-    height: 100%
+    height: calc( 100% - 5rem )
     padding: 2rem
-    box-sizing: border-box
-    display: flex
-    justify-content: space-around
-    align-items: center
+    &_content
+      height: 100%
+      box-sizing: border-box
+      display: flex
+      justify-content: space-around
+      align-items: center
 </style>

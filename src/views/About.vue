@@ -5,8 +5,8 @@
       @setOption="updateActiveSymbol"
     />
     <div class="tables">
-      <BookPriceTable :market="diffs.bids" />
-      <BookPriceTable :market="diffs.asks" />
+      <BookPriceTable :market="diffs.bids" title="bids" />
+      <BookPriceTable :market="diffs.asks" title="asks" />
     </div>
   </div>
 </template>
@@ -37,7 +37,6 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch('updateMarket', this.activeSymbol)
     this.$store.dispatch('updateMarketWithSocket', this.activeSymbol)
   }
 }

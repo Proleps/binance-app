@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {api} from '@/api/binanceApi'
 
 Vue.use(Vuex)
 
@@ -13,8 +14,7 @@ export default new Vuex.Store({
       bids: [],
       asks: []
     },
-    activeSymbol: 'BTCUSDT',
-    socketConnection: null
+    activeSymbol: 'BTCUSDT'
   },
 
   mutations: {
@@ -23,42 +23,36 @@ export default new Vuex.Store({
       state.market.asks = asks
     },
     setDiffs(state, {bids, asks}) {
-      state.diffs.bids = bids/* .concat(state.diffs.bids) */
-      state.diffs.asks = asks/* .concat(state.diffs.asks) */
+      state.diffs.bids = bids
+      state.diffs.asks = asks
+      state.market.bids = state.market.bids.map( (curBid) => {
+        for (let bid of bids) {
+          if (bid[0] === curBid[0]) {
+            return bid
+          } else return curBid
+        }
+      })
+      state.market.asks = state.market.asks.map( (curAsk) => {
+        for (let ask of asks) {
+          if (ask[0] === curAsk[0]) {
+            return ask
+          } else return curAsk
+        }
+      })
     },
     setActiveSymbol(state, newActiveSymbol) {
       state.activeSymbol = newActiveSymbol
-    },
-    setSocketConnection(state, activeSymbol = 'BTCUSDT') {
-      if (state.socketConnection) {
-        state.socketConnection.close()
-      }
-      state.socketConnection = new WebSocket(`wss://stream.binance.com:9443/ws/${activeSymbol.toLowerCase()}@depth@1000ms`)
     }
   },
 
   actions: {
     async updateMarket({commit}, activeSymbol = 'BTCUSDT') {
-      const stream = await fetch(`https://api.binance.com/api/v3/depth?symbol=${activeSymbol}&limit=500`)
-      const response = await stream.json()
+      const response = await api.fetchUpdateMarket(activeSymbol)
       commit('setMarket', response)
     },
 
-    async updateMarketWithSocket({state, commit}, activeSymbol) {
-      commit('setSocketConnection', activeSymbol)
-
-      const stream = await fetch(`https://api.binance.com/api/v3/depth?symbol=${activeSymbol}&limit=500`)
-      const {lastUpdateId} = await stream.json()
-
-      state.socketConnection.onmessage = event => {
-        const response = JSON.parse(event.data)
-        if (response.u > lastUpdateId) {
-          response.b = response.b.filter( (bid) => +bid[1] !== 0)
-          response.a = response.a.filter( (ask) => +ask[1] !== 0)
-          if (response.b.length || response.a.length)
-            commit('setDiffs', {bids: response.b, asks: response.a})
-        }
-      }
+    async updateMarketWithSocket({commit}, activeSymbol = 'BTCUSDT') {
+      api.startWebsocketDiffsCatching(activeSymbol, commit, 'setDiffs')
     },
 
     updateActiveSymbol({commit, dispatch}, newActiveSymbol) {
