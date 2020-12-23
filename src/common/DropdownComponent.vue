@@ -21,30 +21,32 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-  name: "DropdownComponent",
+  name: 'DropdownComponent',
   data() {
     return {
-      dropdownListIsOpen: false
-    }
+      dropdownListIsOpen: false,
+    };
   },
   props: {
     options: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     setDropdownListIsOpen() {
-      this.dropdownListIsOpen = !this.dropdownListIsOpen
-    }
+      this.dropdownListIsOpen = !this.dropdownListIsOpen;
+    },
   },
   computed: {
-    activeOption() {
-      return this.$store.getters.getActiveSymbol
-    }
-  }
-}
+    ...mapState({
+      activeOption: (state) => state.activeSymbol,
+    }),
+  },
+};
 </script>
 
 <style lang="sass" scoped>

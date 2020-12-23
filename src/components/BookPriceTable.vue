@@ -31,19 +31,18 @@ export default {
   props: {
     market: {
       type: Array,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   updated() {
     console.log('updated');
-  }
-}
+  },
+};
 </script>
-
 
 <style lang="sass" scoped>
   .table

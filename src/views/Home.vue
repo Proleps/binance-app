@@ -9,25 +9,25 @@
 </template>
 
 <script>
-import BookPriceTable from '../components/BookPriceTable'
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import BookPriceTable from '../components/BookPriceTable.vue';
 
 export default {
   name: 'Home',
   components: {
-    BookPriceTable
+    BookPriceTable,
   },
   computed: {
     ...mapState({
-      activeSymbol: state => state.activeSymbol,
-      market: state => state.market
-    })
+      activeSymbol: (state) => state.activeSymbol,
+      market: (state) => state.market,
+    }),
   },
   created() {
-    this.$store.dispatch('updateMarket', this.activeSymbol)
-    this.$store.dispatch('updateMarketWithSocket', this.activeSymbol)
-  }
-}
+    this.$store.dispatch('updateMarket', this.activeSymbol);
+    this.$store.dispatch('updateMarketWithSocket', this.activeSymbol);
+  },
+};
 </script>
 
 <style lang="sass" scoped>

@@ -12,34 +12,34 @@
 </template>
 
 <script>
-import DropdownComponent from '../common/DropdownComponent'
-import BookPriceTable from '../components/BookPriceTable'
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import DropdownComponent from '../common/DropdownComponent.vue';
+import BookPriceTable from '../components/BookPriceTable.vue';
 
 export default {
   components: {
-    DropdownComponent, BookPriceTable
-    },
+    DropdownComponent, BookPriceTable,
+  },
   data() {
     return {
-      options: ['BTCUSDT', 'BNBBTC', 'ETHBTC']
-    }
+      options: ['BTCUSDT', 'BNBBTC', 'ETHBTC'],
+    };
   },
   methods: {
     updateActiveSymbol(newSymbol) {
-      this.$store.dispatch('updateActiveSymbol', newSymbol)
-    }
+      this.$store.dispatch('updateActiveSymbol', newSymbol);
+    },
   },
   computed: {
     ...mapState({
-      activeSymbol: state => state.activeSymbol,
-      diffs: state => state.diffs
-    })
+      activeSymbol: (state) => state.activeSymbol,
+      diffs: (state) => state.diffs,
+    }),
   },
   created() {
-    this.$store.dispatch('updateMarketWithSocket', this.activeSymbol)
-  }
-}
+    this.$store.dispatch('updateMarketWithSocket', this.activeSymbol);
+  },
+};
 </script>
 
 <style lang="sass" scoped>
