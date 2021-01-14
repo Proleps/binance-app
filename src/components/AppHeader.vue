@@ -55,8 +55,10 @@ export default {
         margin: 0 0.5rem
         font-weight: bold
         color: #4c5e60
+        text-decoration: none
         &.router-link-exact-active
           color: #42b983
+          text-decoration: underline
   @media (max-width: 481px)
     .header
       &__nav

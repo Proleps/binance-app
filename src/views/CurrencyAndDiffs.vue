@@ -32,12 +32,10 @@ export default {
   },
   methods: {
     updateActiveSymbol(newActiveSymbol) {
-      const newActiveStringSymbol = newActiveSymbol.firstCurrency
-        .concat(newActiveSymbol.secondCurrency);
-      if (newActiveStringSymbol !== this.activeSymbolForStore) {
+      if (JSON.stringify(newActiveSymbol) !== JSON.stringify(this.activeSymbolForStore)) {
         this.diffs.bids = new Map();
         this.diffs.asks = new Map();
-        this.$store.dispatch(UPDATE_ACTIVE_SYMBOL, [newActiveSymbol, newActiveStringSymbol]);
+        this.$store.dispatch(UPDATE_ACTIVE_SYMBOL, newActiveSymbol);
       }
     },
   },

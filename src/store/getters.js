@@ -1,7 +1,6 @@
 export default {
   getActiveSymbolForStore(state) {
-    const { firstCurrency, secondCurrency } = state.activeSymbol;
-    return firstCurrency.concat(secondCurrency);
+    return state.activeSymbol;
   },
 
   getActiveSymbolForPrint(state) {

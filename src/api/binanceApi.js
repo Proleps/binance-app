@@ -11,16 +11,20 @@ class BinanceAPI {
     this.lastUpdateId = null;
   }
 
-  async fetchUpdateMarket(activeSymbol) {
+  async fetchUpdateMarket(activeSymbolsCouple) {
+    const { firstCurrency, secondCurrency } = activeSymbolsCouple;
+    const activeSymbol = firstCurrency.concat(secondCurrency);
     const stream = await fetch(`${API_REST_PATH}depth?symbol=${activeSymbol}&limit=${FETCH_ORDERS_LIMIT}`);
     const response = await stream.json();
     this.lastUpdateId = response.lastUpdateId;
     return response;
   }
 
-  startWebsocketDiffsCatching(activeSymbol, callback, ...argsForCallback) {
+  startWebsocketDiffsCatching(activeSymbolsCouple, callback, ...argsForCallback) {
+    this.fetchUpdateMarket(activeSymbolsCouple);
+    const { firstCurrency, secondCurrency } = activeSymbolsCouple;
+    const activeSymbol = firstCurrency.concat(secondCurrency);
     if (this.socketConnection) this.socketConnection.close();
-    this.fetchUpdateMarket(activeSymbol);
     this.socketConnection = new WebSocket(`${API_WEBSOCKET_PATH}${activeSymbol.toLowerCase()}@depth@${WEBSOCKET_MESSAGE_INTERVAL}ms`);
 
     this.socketConnection.onmessage = (event) => {

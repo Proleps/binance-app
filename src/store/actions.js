@@ -18,9 +18,9 @@ export default {
     api.startWebsocketDiffsCatching(activeSymbol, commit, SET_DIFFS);
   },
 
-  [UPDATE_ACTIVE_SYMBOL]({ commit, dispatch }, [newActiveSymbol, newActiveStringSymbol]) {
+  [UPDATE_ACTIVE_SYMBOL]({ commit, dispatch }, newActiveSymbol) {
     commit(SET_ACTIVE_SYMBOL, newActiveSymbol);
-    dispatch(UPDATE_MARKET_WITH_REST, newActiveStringSymbol);
-    dispatch(UPDATE_MARKET_WITH_SOCKET, newActiveStringSymbol);
+    dispatch(UPDATE_MARKET_WITH_REST, newActiveSymbol);
+    dispatch(UPDATE_MARKET_WITH_SOCKET, newActiveSymbol);
   },
 };
