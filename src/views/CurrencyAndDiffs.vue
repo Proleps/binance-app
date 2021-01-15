@@ -15,11 +15,14 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import DropdownComponent from '../common/DropdownComponent.vue';
 import BookPriceTable from '../components/BookPriceTable.vue';
 import CURRENCIES_LIST from '../currenciesTypes';
-import { UPDATE_MARKET_WITH_SOCKET, UPDATE_ACTIVE_SYMBOL } from '../store/actionTypes';
+import {
+  UPDATE_MARKET_WITH_SOCKET,
+  UPDATE_ACTIVE_SYMBOL,
+} from '../store/actionTypes';
 
 export default {
   components: {
@@ -33,8 +36,6 @@ export default {
   methods: {
     updateActiveSymbol(newActiveSymbol) {
       if (JSON.stringify(newActiveSymbol) !== JSON.stringify(this.activeSymbolForStore)) {
-        this.diffs.bids = new Map();
-        this.diffs.asks = new Map();
         this.$store.dispatch(UPDATE_ACTIVE_SYMBOL, newActiveSymbol);
       }
     },

@@ -1,3 +1,5 @@
+import CURRENCIES_LIST from '../currenciesTypes';
+
 export default {
   market: {
     bids: new Map(),
@@ -7,8 +9,5 @@ export default {
     bids: new Map(),
     asks: new Map(),
   },
-  activeSymbol: {
-    firstCurrency: 'BTC',
-    secondCurrency: 'USDT',
-  },
+  activeSymbol: CURRENCIES_LIST[0],
 };

@@ -2,6 +2,7 @@ import api from '../api/binanceApi';
 import {
   SET_MARKET,
   SET_DIFFS,
+  CLEAR_DIFFS,
   SET_ACTIVE_SYMBOL,
   UPDATE_MARKET_WITH_REST,
   UPDATE_MARKET_WITH_SOCKET,
@@ -9,8 +10,8 @@ import {
 } from './actionTypes';
 
 export default {
-  async [UPDATE_MARKET_WITH_REST]({ commit }, activeSymbol) {
-    const response = await api.fetchUpdateMarket(activeSymbol);
+  async [UPDATE_MARKET_WITH_REST]({ state, commit }, activeSymbol) {
+    const response = await api.fetchUpdateMarket(state.market, activeSymbol);
     commit(SET_MARKET, response);
   },
 
@@ -20,6 +21,7 @@ export default {
 
   [UPDATE_ACTIVE_SYMBOL]({ commit, dispatch }, newActiveSymbol) {
     commit(SET_ACTIVE_SYMBOL, newActiveSymbol);
+    commit(CLEAR_DIFFS);
     dispatch(UPDATE_MARKET_WITH_REST, newActiveSymbol);
     dispatch(UPDATE_MARKET_WITH_SOCKET, newActiveSymbol);
   },

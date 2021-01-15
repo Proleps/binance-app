@@ -1,6 +1,7 @@
 import {
   SET_MARKET,
   SET_DIFFS,
+  CLEAR_DIFFS,
   SET_ACTIVE_SYMBOL,
 } from './actionTypes';
 
@@ -42,14 +43,22 @@ export default {
   },
 
   [SET_DIFFS](state, { bids, asks }) {
-    state.market.bids = update.marketMap(bids, DESCENDING_SORT, state.market.bids);
-    state.market.asks = update.marketMap(asks, ASCENDING_SORT, state.market.asks);
-
-    state.diffs.bids = update.diffsMap(bids);
-    state.diffs.asks = update.diffsMap(asks);
+    if (bids) {
+      state.market.bids = update.marketMap(bids, DESCENDING_SORT, state.market.bids);
+      state.diffs.bids = update.diffsMap(bids, state.diffs.bids);
+    }
+    if (asks) {
+      state.market.asks = update.marketMap(asks, ASCENDING_SORT, state.market.asks);
+      state.diffs.asks = update.diffsMap(asks, state.diffs.asks);
+    }
   },
 
   [SET_ACTIVE_SYMBOL](state, newActiveSymbol) {
     state.activeSymbol = newActiveSymbol;
+  },
+
+  [CLEAR_DIFFS](state) {
+    state.diffs.bids = new Map();
+    state.diffs.asks = new Map();
   },
 };

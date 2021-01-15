@@ -11,7 +11,7 @@
     <div class="table__body body">
       <div class="wrap">
         <div class="table_loading" v-if="!market.size">
-          Пожалуйста подождите, данные загружаются...
+          Пожалуйста подождите пока данные загрузятся...
         </div>
         <div
           v-for="[price, amount] of market"
@@ -33,7 +33,6 @@ export default {
   props: {
     market: {
       type: Map,
-      required: true,
     },
     title: {
       type: String,

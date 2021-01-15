@@ -1,5 +1,6 @@
 export const SET_MARKET = 'SET_MARKET';
 export const SET_DIFFS = 'SET_DIFFS';
+export const CLEAR_DIFFS = 'CLEAR_DIFFS';
 export const SET_ACTIVE_SYMBOL = 'SET_ACTIVE_SYMBOL';
 
 export const UPDATE_MARKET_WITH_REST = 'UPDATE_MARKET_WITH_REST';
