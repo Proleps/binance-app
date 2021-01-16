@@ -1,3 +1,5 @@
+export const INIT = 'INIT';
+
 export const SET_MARKET = 'SET_MARKET';
 export const SET_DIFFS = 'SET_DIFFS';
 export const CLEAR_DIFFS = 'CLEAR_DIFFS';

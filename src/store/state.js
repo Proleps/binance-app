@@ -6,8 +6,8 @@ export default {
     asks: new Map(),
   },
   diffs: {
-    bids: new Map(),
-    asks: new Map(),
+    bids: [],
+    asks: [],
   },
   activeSymbol: CURRENCIES_LIST[0],
 };

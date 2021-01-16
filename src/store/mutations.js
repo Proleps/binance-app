@@ -25,12 +25,9 @@ class UpdateMap {
     return new Map([...newBidsOrAsks.entries()].sort(this.sortList[sortBy]).splice(0, 500));
   }
 
-  diffsMap = (bidsOrAsks) => {
-    const newBidsOrAsks = new Map();
-    bidsOrAsks.forEach((item) => {
-      newBidsOrAsks.set(...item);
-    });
-    return newBidsOrAsks;
+  diffsMap = (bidsOrAsks, curDiff) => {
+    const newDiff = bidsOrAsks.concat(curDiff);
+    return newDiff;
   }
 }
 
@@ -58,7 +55,7 @@ export default {
   },
 
   [CLEAR_DIFFS](state) {
-    state.diffs.bids = new Map();
-    state.diffs.asks = new Map();
+    state.diffs.bids = [];
+    state.diffs.asks = [];
   },
 };

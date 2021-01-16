@@ -1,5 +1,6 @@
-import api from '../api/binanceApi';
+import api from '../api/bitqiApi';
 import {
+  INIT,
   SET_MARKET,
   SET_DIFFS,
   CLEAR_DIFFS,
@@ -10,19 +11,24 @@ import {
 } from './actionTypes';
 
 export default {
-  async [UPDATE_MARKET_WITH_REST]({ state, commit }, activeSymbol) {
-    const response = await api.fetchUpdateMarket(state.market, activeSymbol);
+  [UPDATE_MARKET_WITH_SOCKET]({ commit }) {
+    api.startWebsocketDiffsCatching(commit, SET_DIFFS);
+  },
+
+  async [UPDATE_MARKET_WITH_REST]({ state, commit, dispatch }) {
+    const response = await api.fetchUpdateMarket(state.market);
     commit(SET_MARKET, response);
+    dispatch(UPDATE_MARKET_WITH_SOCKET);
   },
 
-  [UPDATE_MARKET_WITH_SOCKET]({ commit }, activeSymbol) {
-    api.startWebsocketDiffsCatching(activeSymbol, commit, SET_DIFFS);
-  },
-
-  [UPDATE_ACTIVE_SYMBOL]({ commit, dispatch }, newActiveSymbol) {
+  async [UPDATE_ACTIVE_SYMBOL]({ commit }, newActiveSymbol) {
+    await api.updateSymbols(newActiveSymbol);
     commit(SET_ACTIVE_SYMBOL, newActiveSymbol);
     commit(CLEAR_DIFFS);
-    dispatch(UPDATE_MARKET_WITH_REST, newActiveSymbol);
-    dispatch(UPDATE_MARKET_WITH_SOCKET, newActiveSymbol);
+  },
+
+  async [INIT]({ commit }, newActiveSymbol) {
+    await api.updateSymbols(newActiveSymbol);
+    commit(SET_ACTIVE_SYMBOL, newActiveSymbol);
   },
 };

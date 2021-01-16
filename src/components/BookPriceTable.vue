@@ -10,15 +10,15 @@
     </div>
     <div class="table__body body">
       <div class="wrap">
-        <div class="table_loading" v-if="!market.size">
-          Пожалуйста подождите пока данные загрузятся...
+        <div class="table_loading" v-if="!market.length && !market.size">
+          Пожалуйста подождите обновления данных...
         </div>
         <div
-          v-for="[price, amount] of market"
-          :key="price"
+          v-for="([price, amount], key) of market"
+          :key="key"
           class="body__row row"
         >
-          <div class="col">{{amount.substring(0, 8)}}</div>
+          <div class="col">{{amount.substring(0, 9)}}</div>
           <div class="col">{{price.substring(0, 8)}}</div>
           <div class="col hidden-on-mobile">{{`${amount * price}`.substring(0, 12)}}</div>
         </div>
@@ -32,13 +32,16 @@ export default {
   name: 'HomeTable',
   props: {
     market: {
-      type: Map,
+      type: [Map, Array],
     },
     title: {
       type: String,
       required: true,
     },
   },
+  // updated() {
+  //   console.log(this.market);
+  // },
 };
 </script>
 

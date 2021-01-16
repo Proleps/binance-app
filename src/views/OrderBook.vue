@@ -14,7 +14,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import BookPriceTable from '../components/BookPriceTable.vue';
-import { UPDATE_MARKET_WITH_REST, UPDATE_MARKET_WITH_SOCKET } from '../store/actionTypes';
+import { UPDATE_MARKET_WITH_REST, INIT } from '../store/actionTypes';
 
 export default {
   name: 'OrderBook',
@@ -31,8 +31,8 @@ export default {
     }),
   },
   created() {
-    this.$store.dispatch(UPDATE_MARKET_WITH_REST, this.activeSymbolForStore);
-    this.$store.dispatch(UPDATE_MARKET_WITH_SOCKET, this.activeSymbolForStore);
+    this.$store.dispatch(INIT, this.activeSymbolForStore);
+    this.$store.dispatch(UPDATE_MARKET_WITH_REST);
   },
 };
 </script>

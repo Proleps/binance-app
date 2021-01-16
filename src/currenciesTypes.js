@@ -1,11 +1,7 @@
 const CURRENCIES_LIST = Object.freeze([
   {
     firstCurrency: 'BTC',
-    secondCurrency: 'USDT',
-  },
-  {
-    firstCurrency: 'BNB',
-    secondCurrency: 'BTC',
+    secondCurrency: 'USD',
   },
   {
     firstCurrency: 'ETH',

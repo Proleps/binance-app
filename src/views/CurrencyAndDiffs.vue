@@ -22,6 +22,7 @@ import CURRENCIES_LIST from '../currenciesTypes';
 import {
   UPDATE_MARKET_WITH_SOCKET,
   UPDATE_ACTIVE_SYMBOL,
+  INIT,
 } from '../store/actionTypes';
 
 export default {
@@ -50,7 +51,8 @@ export default {
     }),
   },
   created() {
-    this.$store.dispatch(UPDATE_MARKET_WITH_SOCKET, this.activeSymbolForStore);
+    this.$store.dispatch(INIT, this.activeSymbolForStore);
+    this.$store.dispatch(UPDATE_MARKET_WITH_SOCKET);
   },
 };
 </script>
