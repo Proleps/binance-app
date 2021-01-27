@@ -14,13 +14,15 @@ class UpdateMap {
       [ASCENDING_SORT]: (a, b) => a[0] - b[0],
       [DESCENDING_SORT]: (a, b) => b[0] - a[0],
     };
+    this.PRICE = '0';
+    this.AMOUNT = '1';
   }
 
   marketMap(bidsOrAsks, sortBy, oldMap) {
     const newBidsOrAsks = new Map(oldMap);
-    bidsOrAsks.forEach((item) => {
-      if (+item[1] === 0) newBidsOrAsks.delete(item[1]);
-      else newBidsOrAsks.set(...item);
+    bidsOrAsks.forEach((order) => {
+      if (+order[this.AMOUNT] === 0) newBidsOrAsks.delete(order[this.PRICE]);
+      else newBidsOrAsks.set(...order);
     });
     return new Map([...newBidsOrAsks.entries()].sort(this.sortList[sortBy]).splice(0, 500));
   }
